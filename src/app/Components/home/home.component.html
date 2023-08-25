@@ -1,0 +1,71 @@
+<header class="bg-dark py-2">
+  <div class="container px-4 px-lg-5 my-1">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Epsealon Israel</h1>
+      <p class="lead fw-normal text-white-50 mb-0">waga baga</p>
+    </div>
+  </div>
+</header>
+<app-navbar></app-navbar>
+
+<ngb-carousel *ngIf="popularProducts">
+  <ng-template  *ngFor="let item of popularProducts" ngbSlide>
+    <div class="picsum-img-wrapper">
+      <a routerLink="/details/{{item.id}}"> <img class="product-header-image" [src]="'https://django-api.hslab.space' + item.image" alt="Random first slide">
+
+      </a>
+      </div>
+    <div class="carousel-caption">
+      <h3>{{item.name}}</h3>
+      <p>{{item.description}}</p>
+    </div>
+  </ng-template>
+</ngb-carousel>
+
+
+
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-3">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let category of categories" (click)="selectCategory(category)"
+          [class.active]="isCategorySelected(category)">
+          {{ category }}
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col mb-4" *ngFor="let product of filterProductsByCategory()">
+          <div class="card h-100">
+            <!-- Product image -->
+            <img class="card-img-top" [src]="'https://django-api.hslab.space' + product.image" alt="Product Image" />
+
+            <!-- Product details -->
+            <div class="card-body">
+              <!-- Product name -->
+              <h5 class="card-title">{{ product.name }}</h5>
+              <!-- Product description -->
+              <p class="card-text">{{ product.description }}</p>
+              <!-- Product price -->
+              <h6 class="card-subtitle mb-2 text-muted">Price: ₪{{ product.price }}</h6>
+              <!-- Product size -->
+              <p class="card-text">Size: {{ product.size }}</p>
+              <!-- Quantity input and buttons -->
+              <div class="d-flex justify-content-center">
+                <div class="card-footer p-0 border-top-0 bg-transparent">
+                  <div class="text-center">
+                    <button class="btn btn-outline-dark" type="button" (click)="addToCart(product)">
+                      Add to cart
+                    </button>
+                    <button class="btn btn-outline-dark" routerLink="/details/{{product.id}}">View Details</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
